@@ -1,0 +1,109 @@
+/**
+ * Blog carousel: keep slides in one horizontal row.
+ * Track uses flex (same idea as businesses-slider) so layout survives float/display overrides from global CSS.
+ */
+
+/* Match other sections: full width inside .container (no extra max-width / side inset). */
+.blog-slider-sec.slick-dotted.slick-slider {
+  margin-bottom: 0;
+}
+
+.blog-slider-sec.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  /* Space below pagination dots (reference layout) */
+  padding: 0 0 64px;
+}
+
+.blog-slider-sec .slick-prev {
+  left: 0;
+}
+
+.blog-slider-sec .slick-next {
+  right: 0;
+}
+
+.blog-slider-sec .slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Match businesses-slider: flex row on the track so slides stay horizontal even if floats are overridden (MUI / global CSS). */
+.blog-slider-sec .slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.blog-slider-sec .slick-slide {
+  display: none;
+  float: none !important;
+  flex-shrink: 0;
+  height: auto !important;
+  min-height: 1px;
+  box-sizing: border-box;
+}
+
+.blog-slider-sec.slick-initialized .slick-slide {
+  display: flex !important;
+  flex-direction: column;
+}
+
+/* Avoid stretching short slides to the tallest row height (removes empty band inside each card) */
+.blog-slider-sec .slick-slide > div {
+  width: 100%;
+  height: auto !important;
+  outline: none;
+}
+
+/* Card: column stack; no min-height / flex-grow so we don’t get empty space under images */
+.blog-slider-sec .lastes-blogs-main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  margin: 0 8px;
+}
+
+.blog-slider-sec .lastes-blogs-desc {
+  flex: 0 0 auto;
+  /* Original site uses heavy top padding for the watermark number; trim slightly to reduce card height */
+  padding: 52px 24px 20px !important;
+  border-radius: 0 0 40px 40px;
+}
+
+.blog-slider-sec .lastes-blogs-img {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+
+/* Dots centered under the row, with clear space before section ends */
+.blog-slider-sec ul.slick-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  line-height: 1;
+}
+
+.blog-slider-sec .slick-dots li button:before {
+  top: 0;
+}

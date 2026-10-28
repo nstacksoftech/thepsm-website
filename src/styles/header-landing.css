@@ -1,0 +1,129 @@
+/**
+ * PSM header is portaled to document.body so position:fixed is never trapped by
+ * #root, MUI, Emotion, or framer-motion ancestors (common reason “sticky” fails in SPAs).
+ *
+ * Compact logo / menu density still follows thepsm.app: class .on-scroll-fixed when scroll >= 30px.
+ */
+header.psm-landing-navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  box-sizing: border-box !important;
+  z-index: 10000 !important;
+  margin: 0 !important;
+  transition: padding 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Sticky / scrolled: strip top & bottom gap on the bar */
+header.psm-landing-navbar.on-scroll-fixed {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+@media (max-width: 1279px) {
+  header.psm-landing-navbar:not(.on-scroll-fixed) {
+    padding: 5px;
+  }
+
+  header.psm-landing-navbar.on-scroll-fixed {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+/* Logo height controlled here so MUI/Tailwind classes can’t block thepsm shrink rules */
+header.psm-landing-navbar .logo .psm-logo-img {
+  display: block;
+  width: auto;
+  height: 65px;
+  max-height: 65px;
+  object-fit: contain;
+  transition: height 0.35s ease, max-height 0.35s ease;
+}
+
+header.psm-landing-navbar.on-scroll-fixed .logo .psm-logo-img {
+  height: 52px !important;
+  max-height: 52px !important;
+}
+
+header.psm-landing-navbar .main-menu ul li {
+  transition: padding 0.35s ease, margin-top 0.35s ease;
+}
+
+header.psm-landing-navbar nav ul li a.nav-link {
+  transition: padding 0.35s ease, font-size 0.35s ease, line-height 0.35s ease;
+}
+
+header.psm-landing-navbar .btn-style1,
+header.psm-landing-navbar .btn-style2 {
+  transition: padding 0.35s ease, font-size 0.35s ease, min-height 0.35s ease;
+}
+
+/*
+ * Scrolled bar: kill vertical padding from thepsm (nav links use 40px 0 — that sets total header height).
+ * Max specificity + !important so load order / MUI can’t ignore it.
+ */
+header.psm-landing-navbar.navbar.on-scroll-fixed .main-menu ul li {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 6px 14px !important;
+}
+
+header.psm-landing-navbar.navbar.on-scroll-fixed nav ul li > a.nav-link {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  line-height: 1.25 !important;
+}
+
+header.psm-landing-navbar.navbar.on-scroll-fixed nav .btn-style1,
+header.psm-landing-navbar.navbar.on-scroll-fixed nav .btn-style2 {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  line-height: 1.2 !important;
+}
+
+/* Reserve space in the normal layout flow (sits under #root, above <main>). */
+.psm-landing-header-spacer {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/*
+ * Mobile / tablet menu visibility: the landing CSS bundle has .hidden and .xl:flex but
+ * does NOT define max-xl:* utilities, so "max-xl:flex" / "max-xl:hidden" were no-ops and
+ * the menu stayed display:none below 1280px.
+ */
+/* Ensure scroll-spy .active wins over generic nav styles (portaled header + MUI). */
+header.psm-landing-navbar nav ul li.active {
+  background: #645efd1a;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 3px solid var(--primary);
+}
+
+header.psm-landing-navbar nav ul li.active a.nav-link {
+  color: var(--primary);
+}
+
+@media (max-width: 1279px) {
+  header.psm-landing-navbar nav ul li.active {
+    background: #0000;
+  }
+
+  header.psm-landing-navbar nav ul li.active a.nav-link {
+    color: var(--primary);
+  }
+
+  header.psm-landing-navbar nav .main-menu.psm-nav-menu-closed {
+    display: none !important;
+  }
+
+  header.psm-landing-navbar nav .main-menu.psm-nav-menu-open {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
